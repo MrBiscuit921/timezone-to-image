@@ -59,7 +59,7 @@ export default function Home() {
 
   const handleGenerateImage = () => {
     if (selectedTimezone) {
-      const newImageUrl = `https://timezone-to-image.vercel.app/api/generate-image?timezone=${selectedTimezone.value}`;
+      const newImageUrl = `/api/generate-image?timezone=${selectedTimezone.value}`;
       console.log("Generated Image URL: ", newImageUrl); // Add this for debugging
       setImageUrl(newImageUrl);
     }
