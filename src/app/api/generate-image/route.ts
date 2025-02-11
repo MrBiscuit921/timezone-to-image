@@ -1,12 +1,12 @@
 import sharp from "sharp";
-import { NextResponse } from "next/server";
+import {NextResponse} from "next/server";
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
+  const {searchParams} = new URL(req.url);
   const timezone = searchParams.get("timezone");
 
   if (!timezone) {
-    return NextResponse.json({ error: "Timezone is required" }, { status: 400 });
+    return NextResponse.json({error: "Timezone is required"}, {status: 400});
   }
 
   try {
@@ -26,13 +26,13 @@ export async function GET(req: Request) {
     if (text.length > 80) fontSize = 16;
 
     const svgContent = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-        <rect width="100%" height="100%" fill="${bgColor}" />
-        <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif">
-          ${text}
-        </text>
-      </svg>
-    `;
+  <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+    <rect width="100%" height="100%" fill="${bgColor}" />
+    <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle">
+      ${text}
+    </text>
+  </svg>
+`;
 
     const image = await sharp({
       create: {
@@ -59,6 +59,9 @@ export async function GET(req: Request) {
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Failed to generate image" }, { status: 500 });
+    return NextResponse.json(
+      {error: "Failed to generate image"},
+      {status: 500}
+    );
   }
 }
