@@ -1,24 +1,24 @@
-import sharp from 'sharp';
-import { NextResponse } from 'next/server';
+import sharp from "sharp";
+import {NextResponse} from "next/server";
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url); // Access the search parameters from the URL
-  const timezone = searchParams.get('timezone'); // Get the timezone query parameter
+  const {searchParams} = new URL(req.url); // Access the search parameters from the URL
+  const timezone = searchParams.get("timezone"); // Get the timezone query parameter
 
   if (!timezone) {
-    return NextResponse.json({ error: 'Timezone is required' }, { status: 400 });
+    return NextResponse.json({error: "Timezone is required"}, {status: 400});
   }
 
   try {
-    const currentTime = new Date().toLocaleString('en-US', {
+    const currentTime = new Date().toLocaleString("en-US", {
       timeZone: timezone,
     });
 
     // Set up the base image size and background color
     const width = 600;
     const height = 200;
-    const bgColor = '#1a202c'; // Tailwind's bg-dark color
-    const textColor = '#ffffff'; // White text
+    const bgColor = "#1a202c"; // Tailwind's bg-dark color
+    const textColor = "#ffffff"; // White text
     const text = `Current time: ${currentTime}`;
 
     // Calculate text width and adjust font size accordingly
@@ -38,7 +38,11 @@ export async function GET(req: Request) {
       .composite([
         {
           input: Buffer.from(
-            `<svg width="${width}" height="${height}"><text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle" font-family="Arial, sans-serif">${text}</text></svg>`
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+               <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle" font-family="Arial, sans-serif">
+                 ${text}
+               </text>
+             </svg>`
           ),
           top: 0,
           left: 0,
@@ -50,11 +54,14 @@ export async function GET(req: Request) {
     // Send the image in the response
     return new NextResponse(image, {
       headers: {
-        'Content-Type': 'image/png',
+        "Content-Type": "image/png",
       },
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: 'Failed to generate image' }, { status: 500 });
+    return NextResponse.json(
+      {error: "Failed to generate image"},
+      {status: 500}
+    );
   }
 }
