@@ -17,38 +17,37 @@ export async function GET(req: Request) {
     const width = 600;
     const height = 200;
     const bgColor = "#1a202c";
+    const textColor = "#ffffff";
     const text = `Current time: ${currentTime}`;
 
-    // Calculate text width and adjust font size
+    // Set font size based on text length
     let fontSize = 24;
     if (text.length > 50) fontSize = 20;
     if (text.length > 80) fontSize = 16;
 
-    const svgContent = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-    <rect width="100%" height="100%" fill="#1a202c" />
-    <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="$#ffffff" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif">
-      ${text}
-    </text>
-  </svg>
-`;
-
+    // Create a PNG with a background
     const image = await sharp({
       create: {
         width,
         height,
-        channels: 4,
+        channels: 4, // RGBA (red, green, blue, alpha for transparency)
         background: bgColor,
       },
     })
+      .png()
       .composite([
         {
-          input: Buffer.from(svgContent),
+          input: Buffer.from(
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+              <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif">
+                ${text}
+              </text>
+            </svg>`
+          ),
           top: 0,
           left: 0,
         },
       ])
-      .png()
       .toBuffer();
 
     return new NextResponse(image, {
@@ -58,9 +57,6 @@ export async function GET(req: Request) {
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      {error: "Failed to generate image"},
-      {status: 500}
-    );
+    return NextResponse.json({error: "Failed to generate image"}, {status: 500});
   }
 }
