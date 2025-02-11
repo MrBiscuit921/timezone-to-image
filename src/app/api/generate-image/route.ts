@@ -17,7 +17,6 @@ export async function GET(req: Request) {
     const width = 600;
     const height = 200;
     const bgColor = "#1a202c";
-    const textColor = "#ffffff";
     const text = `Current time: ${currentTime}`;
 
     // Calculate text width and adjust font size
@@ -27,8 +26,8 @@ export async function GET(req: Request) {
 
     const svgContent = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-    <rect width="100%" height="100%" fill="${bgColor}" />
-    <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle">
+    <rect width="100%" height="100%" fill="#1a202c" />
+    <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="$#ffffff" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif">
       ${text}
     </text>
   </svg>
