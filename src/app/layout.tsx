@@ -1,18 +1,7 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// Load the fonts with variables for CSS custom properties
-const geistSans = Geist({
-  variable: "--font-geist-sans",  // Custom CSS variable for Geist font
-  subsets: ["latin"],  // Specify which subsets of the font to include
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",  // Custom CSS variable for Geist Mono font
-  subsets: ["latin"],  // Specify which subsets of the font to include
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,7 +18,7 @@ export default function RootLayout({
       <head>
         {/* Add metadata or any other head tags here */}
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`antialiased`}>
         {children}
         <SpeedInsights />
       </body>
