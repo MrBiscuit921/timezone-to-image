@@ -26,6 +26,17 @@ export async function GET(req: Request) {
     if (text.length > 50) fontSize = 20; // Reduce font size if text is too long
     if (text.length > 80) fontSize = 16; // Further reduce if even longer
 
+    console.log(
+      "Generated SVG:",
+      `
+      <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+        <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle">
+          ${text}
+        </text>
+      </svg>
+    `
+    );
+
     // Generate the image using sharp
     const image = await sharp({
       create: {
@@ -39,10 +50,11 @@ export async function GET(req: Request) {
         {
           input: Buffer.from(
             `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-               <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle" font-family="Arial, sans-serif">
-                 ${text}
-               </text>
-             </svg>`
+              <rect width="100%" height="100%" fill="${bgColor}" />
+                <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle">
+                  ${text}
+                </text>
+            </svg>`
           ),
           top: 0,
           left: 0,

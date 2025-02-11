@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+// Load the fonts with variables for CSS custom properties
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: "--font-geist-sans",  // Custom CSS variable for Geist font
+  subsets: ["latin"],  // Specify which subsets of the font to include
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-geist-mono",  // Custom CSS variable for Geist Mono font
+  subsets: ["latin"],  // Specify which subsets of the font to include
 });
 
 export const metadata: Metadata = {
@@ -24,9 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        {/* Add metadata or any other head tags here */}
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
