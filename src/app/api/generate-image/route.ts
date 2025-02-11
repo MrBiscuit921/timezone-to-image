@@ -1,5 +1,12 @@
 import sharp from "sharp";
-import {NextResponse} from "next/server";
+import { Geist } from "next/font/google";
+import { NextResponse } from "next/server";
+
+// Load the fonts with variables for CSS custom properties
+const geistSans = Geist({
+  variable: "--font-geist-sans",  // Custom CSS variable for Geist font
+  subsets: ["latin"],  // Specify which subsets of the font to include
+});
 
 export async function GET(req: Request) {
   const {searchParams} = new URL(req.url); // Access the search parameters from the URL
@@ -26,17 +33,13 @@ export async function GET(req: Request) {
     if (text.length > 50) fontSize = 20; // Reduce font size if text is too long
     if (text.length > 80) fontSize = 16; // Further reduce if even longer
 
-    console.log(
-      "Generated SVG:",
-      `
+    console.log("Generated SVG:", `
       <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-        <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle">
+        <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle" font-family="${geistSans.variable}">
           ${text}
         </text>
       </svg>
-    `
-    );
-
+    `);
     // Generate the image using sharp
     const image = await sharp({
       create: {
@@ -51,7 +54,7 @@ export async function GET(req: Request) {
           input: Buffer.from(
             `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
               <rect width="100%" height="100%" fill="${bgColor}" />
-                <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle">
+                <text x="50%" y="50%" font-size="${fontSize}" text-anchor="middle" fill="${textColor}" dominant-baseline="middle" font-family="Arial, sans-serif">
                   ${text}
                 </text>
             </svg>`
