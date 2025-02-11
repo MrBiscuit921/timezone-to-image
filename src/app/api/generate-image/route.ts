@@ -31,7 +31,7 @@ export async function GET(req: Request) {
     if (text.length > 50) fontSize = 20;
     if (text.length > 80) fontSize = 16;
     
-    ctx.font = `${fontSize}px Arial`;  // Use Arial font
+    ctx.font = `${fontSize}px sans-serif`;  // Use Arial font
     ctx.fillStyle = textColor;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
