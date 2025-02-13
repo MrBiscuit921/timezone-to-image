@@ -1,5 +1,11 @@
-import {createCanvas} from "canvas";
-import {NextResponse} from "next/server";
+import { registerFont, createCanvas } from "canvas";
+import path from "path";
+import { NextResponse } from "next/server";
+
+// Register Google Font (Roboto)
+registerFont(path.join(process.cwd(), "public/fonts/Geist-Regular.ttf"), {
+  family: "Geist",
+});
 
 export async function GET(req: Request) {
   const {searchParams} = new URL(req.url);
@@ -34,7 +40,7 @@ export async function GET(req: Request) {
     if (text.length > 80) fontSize = 16;
 
     // Set up font with a fallback stack (Arial, Helvetica, sans-serif)
-    ctx.font = `${fontSize}px "Arial", "Helvetica", "sans-serif"`;
+    ctx.font = `${fontSize}px "Geist"`;
     ctx.fillStyle = textColor;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
