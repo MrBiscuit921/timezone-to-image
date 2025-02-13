@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 // Register the Geist font
 const fontPath = path.resolve(process.cwd(), "public", "fonts", "Geist-VariableFont_wght.ttf");
-console.log("Registering font:", fontPath);
 registerFont(fontPath, { family: "Geist Thin" });
 
 
@@ -35,8 +34,6 @@ export async function GET(req: Request) {
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, width, height);
 
-    // Debug: List available fonts
-    console.log("Setting font to Geist...");
     ctx.font = '24px "Geist Regular", sans-serif';
     console.log("Current font set:", ctx.font);
 
