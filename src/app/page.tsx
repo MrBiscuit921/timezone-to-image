@@ -145,7 +145,7 @@ export default function Home() {
             Embed the image using this markdown:
           </p>
           <pre className="bg-gray-800 p-2 text-sm text-white rounded">
-            {`![](${imageUrl})`}
+            {`![](https://timezone-to-image.vercel.app/${imageUrl})`}
           </pre>
         </div>
       )}
